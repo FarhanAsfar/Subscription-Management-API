@@ -1,7 +1,7 @@
 import dotenv from "dotenv"
 dotenv.config();
 import express from "express"
-import { connectDatabase } from "./db";
+import { connectDatabase } from "./db/index.js";
 
 const app = express();
 
