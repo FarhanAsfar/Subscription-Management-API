@@ -1,6 +1,8 @@
 import { Router } from "express";
+import { signUp } from "../controllers/auth.controller";
 
 const userRouter = Router();
+
 
 userRouter.route("/").get(getUsers);
 

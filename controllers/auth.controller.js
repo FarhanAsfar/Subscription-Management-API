@@ -42,3 +42,5 @@ const signUP = asyncHandler(async (req, res) => {
     );
 
 })
+
+export {signUP}
