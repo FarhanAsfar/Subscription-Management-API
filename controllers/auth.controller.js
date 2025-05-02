@@ -7,8 +7,8 @@ import mongoose from "mongoose"
 
 
 const signUP = asyncHandler(async (req, res) => {
-    const session = await mongoose.startSession();
-    session.startTransaction();
+    //const session = await mongoose.startSession();
+    //session.startTransaction();
 
     const {username, email, password} = req.body;    
 
@@ -16,7 +16,7 @@ const signUP = asyncHandler(async (req, res) => {
         throw new ApiError(400, "All fields are required");
     }
 
-    const existedUser = await User.find({
+    const existedUser = await User.findOne({
         $or: [
             {username},
             {email}
@@ -28,7 +28,7 @@ const signUP = asyncHandler(async (req, res) => {
     }
 
     const newUser = await User.create({
-        username: username.toString().toLowercase(),
+        username: username.toString().toLowerCase(),
         email,
         password,
     });
@@ -38,7 +38,7 @@ const signUP = asyncHandler(async (req, res) => {
     }
 
     return res.status(201).json(
-        new ApiResponse(200, newUser, "User created successfully")
+        new ApiResponse(201, newUser, "User created successfully")
     );
 
 })
