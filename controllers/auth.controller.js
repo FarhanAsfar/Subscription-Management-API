@@ -31,12 +31,16 @@ const signUP = asyncHandler(async (req, res) => {
         password,
     });
 
-    if(!newUser){
+    const createdUser = await User.findById(newUser._id).select(
+        "-password"
+    );
+    
+    if(!createdUser){
         throw new ApiError(500, "User registration failed.");
     }
 
     return res.status(201).json(
-        new ApiResponse(201, newUser, "User created successfully")
+        new ApiResponse(201, createdUser, "User created successfully")
     );
 
 })
