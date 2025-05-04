@@ -45,4 +45,36 @@ const signUP = asyncHandler(async (req, res) => {
 
 })
 
-export {signUP}
+const signIN = asyncHandler(async (req, res) => {
+    const {email, password} = req.body;
+
+    if(!email || !password){
+        throw new ApiError(400, "Email and Password are required");
+    }
+
+    const user = await User.findOne({
+        $or:[
+            {email}
+        ]
+    })
+
+    if(!user){
+        throw new ApiError(404, "User does not exist");
+    }
+
+    const isPasswordValid = await user.isPassword(password);
+
+    if(!isPasswordValid){
+        throw new ApiError(401, "Invalid Password");
+    }
+
+    return res.status(200).json({
+        message: "user logged in"
+    });
+
+})
+
+export {
+    signUP,
+    signIN,
+}
