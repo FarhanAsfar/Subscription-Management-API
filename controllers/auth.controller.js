@@ -2,11 +2,12 @@ import {User} from "../models/user.model.js"
 import { asyncHandler } from "../utils/asyncHandler.js"
 import { ApiError } from "../utils/ApiError.js"
 import { ApiResponse } from "../utils/ApiResponse.js"
+import mongoose from "mongoose"
 
 
 const signUP = asyncHandler(async (req, res) => {
-    //const session = await mongoose.startSession();
-    //session.startTransaction();
+    const session = await mongoose.startSession();
+    session.startTransaction();
 
     const {username, email, password} = req.body;    
 
@@ -38,6 +39,9 @@ const signUP = asyncHandler(async (req, res) => {
     if(!createdUser){
         throw new ApiError(500, "User registration failed.");
     }
+
+    await session.commitTransaction();
+    session.endSession();
 
     return res.status(201).json(
         new ApiResponse(201, createdUser, "User created successfully")
