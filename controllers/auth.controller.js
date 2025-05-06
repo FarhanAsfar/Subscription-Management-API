@@ -86,9 +86,25 @@ const signIN = asyncHandler(async (req, res) => {
         throw new ApiError(401, "Invalid Password");
     }
 
-    return res.status(200).json({
-        message: "user logged in"
-    });
+    const {accessToken, refreshToken} = await generateAccessAndRefreshToken(user._id);
+
+    const loggedInUser = await user.findById(user._id).select("-password -refreshToken");
+
+    const options = {
+        httpOnly: true,
+        secure: true,
+    }
+
+    return res.status(200)
+    .cookie("accessToken", accessToken, options)
+    .cookie("refreshToken", refreshToken, options)
+    .json(
+        new ApiResponse(
+            200,
+            {user: loggedInUser, accessToken, refreshToken},
+            "user logged in successfully"
+        )
+    );
 
 })
 
