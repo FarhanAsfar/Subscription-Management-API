@@ -4,6 +4,20 @@ import { ApiError } from "../utils/ApiError.js"
 import { ApiResponse } from "../utils/ApiResponse.js"
 import mongoose from "mongoose"
 
+const generateAccessAndRefreshToken = async(userID) => {
+    try {
+        const user = await User.findOne(userID);
+
+        const accessToken = user.generateAccessToken();
+        const refreshToken = user.generateRefreshToken();
+
+        await user.save({validateBeforeSave: false});
+
+        return {accessToken, refreshToken}
+    } catch (error) {
+        throw new ApiError(500, "Acess/Refresh token generation failed!")
+    }
+}
 
 const signUP = asyncHandler(async (req, res) => {
     const session = await mongoose.startSession();
