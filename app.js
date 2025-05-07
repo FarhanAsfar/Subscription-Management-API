@@ -15,6 +15,8 @@ app.use(express.static("public"));
 // import { userRouter } from "./routes/user.routes.js";
 import { authRouter } from "./routes/auth.routes.js";
 
+app.use("/api/v1/auth", authRouter);
+
 app.get("/", (req, res) => {
   res.status(200).json({
     message: "API is running successfully",
@@ -22,7 +24,7 @@ app.get("/", (req, res) => {
   });
 });
 
-app.use("/api/v1/auth", authRouter);
+
 
 
 
