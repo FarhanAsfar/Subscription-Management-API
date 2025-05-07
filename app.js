@@ -1,7 +1,10 @@
 import express from "express";
-
 import cookieParser from "cookie-parser";
 import cors from "cors";
+
+// import { userRouter } from "./routes/user.routes.js";
+import { authRouter } from "./routes/auth.routes.js";
+
 
 const app = express();
 
@@ -12,16 +15,10 @@ app.use(cookieParser());
 app.use(express.static("public"));
 
 
-// import { userRouter } from "./routes/user.routes.js";
-import { authRouter } from "./routes/auth.routes.js";
-
 app.use("/api/v1/auth", authRouter);
 
 app.get("/", (req, res) => {
-  res.status(200).json({
-    message: "API is running successfully",
-    status: "active"
-  });
+  res.send("Subscription Management Api");
 });
 
 
