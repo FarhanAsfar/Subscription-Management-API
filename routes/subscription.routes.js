@@ -3,7 +3,7 @@ import { Router } from "express";
 const subscriptionRouter = Router();
 
 subscriptionRouter.get("/", (req, res) => {
-    res.send({title: "GET all subscriptions"})
+    
 })
 
 subscriptionRouter.get("/:id", (req, res) => {
@@ -31,4 +31,4 @@ subscriptionRouter.post("/upcoming-renewals", (req, res) => {
 })
 
 
-export default subscriptionRouter;
+export {subscriptionRouter};
