@@ -6,7 +6,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import mongoose from "mongoose";
 
 const createSubscription = asyncHandler(async (req, res) => {
-    const {name, price, currency, frequency, category, startDate, renewalDate} = req.body;
+    const {name, price, currency, frequency, category, startDate} = req.body;
 
     const newSubscription = await Subscription.create({
         name,
@@ -15,7 +15,6 @@ const createSubscription = asyncHandler(async (req, res) => {
         frequency,
         category,
         startDate,
-        renewalDate,
         user: req.user._id,
     })
 
