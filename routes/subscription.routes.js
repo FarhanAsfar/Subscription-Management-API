@@ -1,12 +1,14 @@
 import { Router } from "express";
-import { getAllSubscriptions, createSubscription } from "../controllers/subscription.controller.js";
+import { getUserSubscriptions, createSubscription } from "../controllers/subscription.controller.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 
 const subscriptionRouter = Router();
 
+//api/v1/subscription
+
 subscriptionRouter.post("/", verifyJWT, createSubscription)
 
-subscriptionRouter.get("/", getAllSubscriptions)
+subscriptionRouter.get("/", verifyJWT, getUserSubscriptions)
 
 
 
