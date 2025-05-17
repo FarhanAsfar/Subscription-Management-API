@@ -19,29 +19,36 @@ const createSubscription = asyncHandler(async (req, res) => {
     })
 
     if(!newSubscription){
-        throw new ApiError(500, "Could not create the subscription model");
+        throw new ApiError(500, "Could not subscribe!");
     }
 
     return res.status(201).json(
-        new ApiResponse(201, newSubscription, "Subscription model created")
+        new ApiResponse(201, newSubscription, "Subscription was successful")
     )
 });
 
-const getAllSubscriptions = asyncHandler(async (req, res) => {
-    const subscription = await Subscription.find({});
+const getUserSubscriptions = asyncHandler(async (req, res) => {
+    const userId = req.user._id;
+    //console.log(user);
+    const subscription = await Subscription.find({
+        user: userId
+    });
 
     res.status(200)
     .json({
-        subscription: subscription.map(subscription => ({
+        user: userId,
+        subscription_packages: subscription.map(subscription => ({
             name: subscription.name,
             price: subscription.price,
+            category: subscription.category,
+            renewal_date: subscription.renewalDate,
         }))
     })
 });
 
 
 export {
-    getAllSubscriptions,
     createSubscription,
+    getUserSubscriptions,
 }
 
