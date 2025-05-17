@@ -3,12 +3,12 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 
 import swaggerUi from 'swagger-ui-express';
+import swaggerJSDoc from "swagger-jsdoc";
 import { apiSpec } from './docs/openapi.js';
 
 // import { userRouter } from "./routes/user.routes.js";
 import { authRouter } from "./routes/auth.routes.js";
 import { subscriptionRouter } from "./routes/subscription.routes.js";
-//import { userRouter } from "./routes/user.routes.js";
 
 
 const app = express();
