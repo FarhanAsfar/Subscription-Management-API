@@ -48,16 +48,23 @@ const getUserSubscriptions = asyncHandler(async (req, res) => {
 });
 
 const cancelSubscription = asyncHandler(async (req, res) => {
+    const user = req.user._id;
     const {status, subscriptionId} = req.body;
 
     const subscription = await Subscription.findByIdAndUpdate(
         subscriptionId,
+        user, //so that a user can't change the status of any other user's
         {
             $set:{
                 status,
                 renewalDate: null,
             }
-        }, {new: true})
+        }, {new: true}
+    )
+    
+    if(!subscription){
+        throw new ApiError(404, "Subscription not found");
+    }
 
     return res.status(200)
     .json(new ApiResponse(200, subscription, "Subscription status updated"))
