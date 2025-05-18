@@ -5,7 +5,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 
 
 const createSubscription = asyncHandler(async (req, res) => {
-    const {name, price, currency, frequency, category, startDate} = req.body;
+    const {name, price, currency, frequency, category, startDate, status} = req.body;
 
     const newSubscription = await Subscription.create({
         name,
@@ -14,6 +14,7 @@ const createSubscription = asyncHandler(async (req, res) => {
         frequency,
         category,
         startDate,
+        status,
         user: req.user._id,
     })
 
@@ -40,14 +41,32 @@ const getUserSubscriptions = asyncHandler(async (req, res) => {
             name: subscription.name,
             price: subscription.price,
             category: subscription.category,
+            status: subscription.status,
             renewal_date: subscription.renewalDate,
         }))
     })
 });
 
+const cancelSubscription = asyncHandler(async (req, res) => {
+    const {status, subscriptionId} = req.body;
+
+    const subscription = await Subscription.findByIdAndUpdate(
+        subscriptionId,
+        {
+            $set:{
+                status,
+                renewalDate: null,
+            }
+        }, {new: true})
+
+    return res.status(200)
+    .json(new ApiResponse(200, subscription, "Subscription status updated"))
+
+})
 
 export {
     createSubscription,
     getUserSubscriptions,
+    cancelSubscription,
 }
 
