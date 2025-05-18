@@ -51,20 +51,30 @@ const cancelSubscription = asyncHandler(async (req, res) => {
     const user = req.user._id;
     const {status, subscriptionId} = req.body;
 
-    const subscription = await Subscription.findByIdAndUpdate(
-        subscriptionId,
-        user, //so that a user can't change the status of any other user's
-        {
-            $set:{
-                status,
-                renewalDate: null,
-            }
-        }, {new: true}
-    )
+    const subscription = await Subscription.findById(subscriptionId);
     
     if(!subscription){
         throw new ApiError(404, "Subscription not found");
     }
+
+    if(subscription.user.toString() !== user.toString()){
+        throw new ApiError(403, "You are not authorized to cancel this subscription")
+    }
+
+    const allowedStatus = ["Cancelled"];
+    if(!allowedStatus.includes(status)){
+        return res.status(400).json(
+            new ApiResponse(400, "", "Invalid status")
+        )
+    }
+    
+    if(subscription.status == "Cancelled"){
+        throw new ApiError(400, "Subscription already cancelled")
+    }
+
+    subscription.status = "Cancelled";
+    subscription.renewalDate = null;
+    await subscription.save();
 
     return res.status(200)
     .json(new ApiResponse(200, subscription, "Subscription status updated"))
