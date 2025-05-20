@@ -6,7 +6,7 @@ import swaggerUi from 'swagger-ui-express';
 import swaggerJSDoc from "swagger-jsdoc";
 import { apiSpec } from './docs/openapi.js';
 
-// import { userRouter } from "./routes/user.routes.js";
+import { userRouter } from "./routes/user.routes.js";
 import { authRouter } from "./routes/auth.routes.js";
 import { subscriptionRouter } from "./routes/subscription.routes.js";
 
@@ -22,7 +22,7 @@ app.use(express.static("public"));
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/subscription", subscriptionRouter);
-//app.use("/api/v1/user", userRouter);
+app.use("/api/v1/user", userRouter);
 
 
 // Mount the Swagger UI
