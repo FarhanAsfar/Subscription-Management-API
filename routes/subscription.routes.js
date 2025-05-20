@@ -6,7 +6,7 @@ const subscriptionRouter = Router();
 
 //api/v1/subscription
 
-subscriptionRouter.post("/", verifyJWT, createSubscription)
+subscriptionRouter.post("/create-subscription", verifyJWT, createSubscription)
 
 subscriptionRouter.get("/", verifyJWT, getUserSubscriptions)
 
