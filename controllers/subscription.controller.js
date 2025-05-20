@@ -49,7 +49,7 @@ const getUserSubscriptions = asyncHandler(async (req, res) => {
 
 const cancelSubscription = asyncHandler(async (req, res) => {
     const user = req.user._id;
-    const {status, subscriptionId} = req.body;
+    const {subscriptionId} = req.body;
 
     const subscription = await Subscription.findById(subscriptionId);
     
@@ -61,15 +61,8 @@ const cancelSubscription = asyncHandler(async (req, res) => {
         throw new ApiError(403, "You are not authorized to cancel this subscription")
     }
 
-    const allowedStatus = ["Cancelled"];
-    if(!allowedStatus.includes(status)){
-        return res.status(400).json(
-            new ApiResponse(400, "", "Invalid status")
-        )
-    }
-    
     if(subscription.status == "Cancelled"){
-        throw new ApiError(400, "Subscription already cancelled")
+        throw new ApiError(400, "Subscription is already cancelled")
     }
 
     subscription.status = "Cancelled";
