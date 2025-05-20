@@ -41,7 +41,9 @@ const getUserSubscriptions = asyncHandler(async (req, res) => {
             name: subscription.name,
             price: subscription.price,
             category: subscription.category,
+            frequency: subscription.frequency,
             status: subscription.status,
+            startDate: subscription.startDate,
             renewal_date: subscription.renewalDate,
         }))
     })

@@ -324,7 +324,8 @@ export const apiSpec = {
         }
         }
       },
-    components: {
+},
+components: {
       securitySchemes: {
         bearerAuth: {
           type: "http",
@@ -333,5 +334,4 @@ export const apiSpec = {
         }
       }
     }
-  }
 }
