@@ -2,13 +2,19 @@
   "name": "subscription-management-api",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "jest --detectOpenHandles --forceExit --runInbBand",
+    "test": "jest --detectOpenHandles --forceExit --runInBand",
     "start": "nodemon index.js"
   },
   "jest": {
     "testEnvironment": "node",
-    "setupFilesAfterEnv": ["./tests/setup.js"]
+    "setupFilesAfterEnv": [
+      "./tests/setup.js"
+    ],
+    "transform": { 
+      "^.+\\.js$": "babel-jest"
+    }
   },
   "repository": {
     "type": "git",
@@ -34,8 +40,10 @@
     "swagger-ui-express": "^5.0.1",
     "zod": "^3.24.2"
   },
-  "type": "module",
   "devDependencies": {
+    "@babel/core": "^7.27.1",
+    "@babel/preset-env": "^7.27.2",
+    "babel-jest": "^29.7.0",
     "jest": "^29.7.0",
     "mongodb-memory-server": "^10.1.4",
     "supertest": "^7.1.1"
