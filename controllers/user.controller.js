@@ -31,8 +31,12 @@ const updateUserAccount = asyncHandler(async (req, res) => {
         throw new ApiError(400, "Nothing was changed")
     }
 
-    user.username = username;
-    user.email = email;
+    if(username){
+        user.username = username;
+    }
+    if(email){
+        user.email = email;
+    }
     await user.save();
 
     return res.status(200).json(
