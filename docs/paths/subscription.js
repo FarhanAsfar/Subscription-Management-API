@@ -184,7 +184,7 @@ export const subscriptionPaths = {
                       category: { type: "string", example: "Entertainment" },
                       startDate: { type: "string", format: "date", example: "2025-06-01" },
                       renewalDate: { type: "string", format: "date", example: "2024-07-01" },
-                      status: { type: "string", example: "active" },
+                      status: { type: "string", example: "cancelled" },
                       user: { type: "string", example: "660f1b9f7f3f4b0021a12345" }
                     }
                   },
@@ -197,7 +197,7 @@ export const subscriptionPaths = {
             }
           }
         },
-        500: {
+        400: {
           description: "Could not cancel subscription"
         }
       }

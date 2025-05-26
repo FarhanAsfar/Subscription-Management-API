@@ -9,6 +9,7 @@ import { apiSpec } from './docs/openapi.js';
 import { userRouter } from "./routes/user.routes.js";
 import { authRouter } from "./routes/auth.routes.js";
 import { subscriptionRouter } from "./routes/subscription.routes.js";
+import {errorHandler} from "./middlewares/error.middleware.js";
 
 
 const app = express();
@@ -33,8 +34,7 @@ app.get('/', (req, res) => {
   res.redirect('/api-docs');
 });
 
-
-
+app.use(errorHandler);
 
 
 export {app};
