@@ -38,8 +38,10 @@ const getUserSubscriptions = asyncHandler(async (req, res) => {
     .json({
         user: userId,
         subscription_packages: subscription.map(subscription => ({
+            id: subscription._id,
             name: subscription.name,
             price: subscription.price,
+            currency: subscription.currency,
             category: subscription.category,
             frequency: subscription.frequency,
             status: subscription.status,
@@ -72,7 +74,7 @@ const cancelSubscription = asyncHandler(async (req, res) => {
     await subscription.save();
 
     return res.status(200)
-    .json(new ApiResponse(200, subscription, "Subscription status updated"))
+    .json(new ApiResponse(200, subscription, "Subscription was cancelled successfully"))
 
 })
 
