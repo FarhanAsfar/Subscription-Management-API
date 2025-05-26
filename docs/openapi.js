@@ -12,10 +12,10 @@ export const apiSpec = {
     description: "API for managing user subscriptions"
   },
   servers: [
-    // {
-    //   url: "https://subscription-management-api-8olf.onrender.com",
-    //   description: "Production server"
-    // },
+    {
+      url: "https://subscription-management-api-8olf.onrender.com",
+      description: "Production server"
+    },
     {
       url: process.env.PORT ? `http://localhost:${process.env.PORT}` : "http://localhost:8000",
       description: "Development server"
