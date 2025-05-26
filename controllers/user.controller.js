@@ -5,7 +5,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 
 
 const getUserById = asyncHandler(async (req, res) => {
-    const userId = req.params.id;
+    const userId = req.user._id;
 
     const user = await User.findById(userId).select("-password");
 
@@ -19,7 +19,7 @@ const getUserById = asyncHandler(async (req, res) => {
 });
 
 const updateUserAccount = asyncHandler(async (req, res) => {
-    const userId = req.params.id;
+    const userId = req.user._id;
     const {username, email} = req.body;
     const user = await User.findById(userId).select("-password");
 
@@ -31,8 +31,12 @@ const updateUserAccount = asyncHandler(async (req, res) => {
         throw new ApiError(400, "Nothing was changed")
     }
 
-    user.username = username;
-    user.email = email;
+    if(username){
+        user.username = username;
+    }
+    if(email){
+        user.email = email;
+    }
     await user.save();
 
     return res.status(200).json(
@@ -43,6 +47,10 @@ const updateUserAccount = asyncHandler(async (req, res) => {
 const changeUserPassword = asyncHandler(async (req, res) => {
     const {oldPassword, newPassword} = req.body;
 
+    if(!oldPassword || !newPassword){
+        throw new ApiError(400, "Both Old and New password are required to change password")
+    }
+    
     const user = await User.findById(req.user?._id);
     const isPassword = await user.isPassword(oldPassword);
 

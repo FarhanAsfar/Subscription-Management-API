@@ -6,9 +6,9 @@ const userRouter = Router();
 //route: api/v1/user
 
 
-userRouter.route("/:id").get(verifyJWT, getUserById);
+userRouter.route("/profile").get(verifyJWT, getUserById);
 
-userRouter.route("/update-account/:id").put(verifyJWT, updateUserAccount);
+userRouter.route("/update-account/").put(verifyJWT, updateUserAccount);
 
 userRouter.route("/change-password").put(verifyJWT, changeUserPassword);
 

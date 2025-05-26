@@ -1,7 +1,8 @@
 // docs/openapi.js
 
-import { authPaths } from "./paths/auth.js";
-import { subscriptionPaths } from "./paths/subscription.js";
+import { authPaths } from "./paths/auth.swagger.js";
+import { userPaths } from "./paths/user.swagger.js";
+import { subscriptionPaths } from "./paths/subscription.swagger.js";
 
 export const apiSpec = {
   openapi: "3.0.0",
@@ -11,10 +12,10 @@ export const apiSpec = {
     description: "API for managing user subscriptions"
   },
   servers: [
-    {
-      url: "https://subscription-management-api-8olf.onrender.com",
-      description: "Production server"
-    },
+    // {
+    //   url: "https://subscription-management-api-8olf.onrender.com",
+    //   description: "Production server"
+    // },
     {
       url: process.env.PORT ? `http://localhost:${process.env.PORT}` : "http://localhost:8000",
       description: "Development server"
@@ -37,7 +38,7 @@ export const apiSpec = {
   paths: {
     ...authPaths, // Merge authentication paths
     ...subscriptionPaths, // Merge subscription paths
-    // You can add more paths here or import from other files
+    ...userPaths,
   },
   components: {
     securitySchemes: {
