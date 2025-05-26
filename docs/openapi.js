@@ -1,7 +1,8 @@
 // docs/openapi.js
 
-import { authPaths } from "./paths/auth.js";
-import { subscriptionPaths } from "./paths/subscription.js";
+import { authPaths } from "./paths/auth.swagger.js";
+import { userPaths } from "./paths/user.swagger.js";
+import { subscriptionPaths } from "./paths/subscription.swagger.js";
 
 export const apiSpec = {
   openapi: "3.0.0",
@@ -37,7 +38,7 @@ export const apiSpec = {
   paths: {
     ...authPaths, // Merge authentication paths
     ...subscriptionPaths, // Merge subscription paths
-    // You can add more paths here or import from other files
+    ...userPaths,
   },
   components: {
     securitySchemes: {

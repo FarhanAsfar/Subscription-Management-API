@@ -5,7 +5,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 
 
 const getUserById = asyncHandler(async (req, res) => {
-    const userId = req.params.id;
+    const userId = req.user._id;
 
     const user = await User.findById(userId).select("-password");
 
@@ -19,7 +19,7 @@ const getUserById = asyncHandler(async (req, res) => {
 });
 
 const updateUserAccount = asyncHandler(async (req, res) => {
-    const userId = req.params.id;
+    const userId = req.user._id;
     const {username, email} = req.body;
     const user = await User.findById(userId).select("-password");
 

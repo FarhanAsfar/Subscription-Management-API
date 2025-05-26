@@ -139,7 +139,7 @@ export const subscriptionPaths = {
     }
   },
   //cancel a subscription
-  "/api/v1/subscription/cancel": {
+  "/api/v1/subscription/cancel-subscription": {
     put: {
       tags: ["Subscriptions"],
       summary: "Cancel a subscription",

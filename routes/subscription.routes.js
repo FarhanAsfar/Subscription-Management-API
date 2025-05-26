@@ -10,7 +10,7 @@ subscriptionRouter.post("/create-subscription", verifyJWT, createSubscription)
 
 subscriptionRouter.get("/", verifyJWT, getUserSubscriptions)
 
-subscriptionRouter.put("/cancel", verifyJWT, cancelSubscription)
+subscriptionRouter.put("/cancel-subscription", verifyJWT, cancelSubscription)
 
 subscriptionRouter.put("/:id", (req, res) => {
     res.send({title: "Update subscriptions"})
