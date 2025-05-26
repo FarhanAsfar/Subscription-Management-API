@@ -103,4 +103,60 @@ export const userPaths = {
       }
     }
   },
+  //change user password
+  "/api/v1/user/change-password": {
+    put: {
+      tags: ["User"],
+      summary: "Change password of the logged in user",
+      security: [{ bearerAuth: [] }],
+      requestBody: {
+        required: true,
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              required: ["password",],
+              properties: {
+                oldPassword: {
+                  type: "string",
+                  format: "password",
+                  example: "your-old-password",
+                },
+                newPassword: {
+                  type: "string",
+                  format: "password",
+                  example: "your-new-password",
+                },
+              }
+            }
+          }
+        }
+      },
+      responses: {
+        200: {
+          description: "Password changed successfully",
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                properties: {
+                  statusCode: {
+                    type: "integer",
+                    example: 200
+                  },
+                  message: {
+                    type: "string",
+                    example: "Password changed successfully"
+                  }
+                }
+              }
+            }
+          }
+        },
+        400: {
+          description: "Password is incorrect"
+        }
+      }
+    }
+  },
 }
