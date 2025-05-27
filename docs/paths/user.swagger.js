@@ -159,4 +159,36 @@ export const userPaths = {
       }
     }
   },
+  "/api/v1/auth/signout": {
+    post: {
+      tags: ["Authentication"],
+      summary: "Logout from the account",
+      security: [{ bearerAuth: [] }],
+      responses: {
+        200: {
+          description: "Log out user",
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                properties: {
+                  statusCode: {
+                    type: "integer",
+                    example: 200
+                  },
+                  message: {
+                    type: "string",
+                    example: "John Doe logged out successfully"
+                  }
+                }
+              }
+            }
+          }
+        },
+        400: {
+          description: "Could not log out"
+        }
+      }
+    }
+  },
 }
