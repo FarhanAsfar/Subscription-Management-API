@@ -10,7 +10,7 @@ beforeAll(() => {
 
 describe('POST /api/v1/auth/signup', () => {
 
-  // --- 1. Happy Path: Successful User Registration ---
+  // --- 1. Path: Successful User Registration ---
   it('should register a new user and return tokens with 201 status', async () => {
     const userData = {
       username: 'testuser',
