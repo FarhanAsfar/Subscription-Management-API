@@ -10,6 +10,7 @@ import { userRouter } from "./routes/user.routes.js";
 import { authRouter } from "./routes/auth.routes.js";
 import { subscriptionRouter } from "./routes/subscription.routes.js";
 import {errorHandler} from "./middlewares/error.middleware.js";
+import { adminRouter } from "./routes/admin.routes.js";
 
 
 const app = express();

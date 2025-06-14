@@ -4,7 +4,7 @@ import { createAdmin} from "../controllers/admin.controller.js";
 const adminRouter = Router();
 
 
-adminRouter("/").post(createAdmin);
+adminRouter.route("/").post(createAdmin);
 
 
 export { adminRouter };
