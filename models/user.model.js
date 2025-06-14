@@ -40,7 +40,7 @@ userSchema.pre("save", async function(next) {
 
 userSchema.methods.isPassword = async function (password) {
     if(!password || !this.password){
-        console.log("Invalid password");
+        console.log("Can not match password");
     }
     return await bcryptjs.compare(password, this.password);
 }
