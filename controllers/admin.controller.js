@@ -2,13 +2,14 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { Admin } from "../models/admin.model.js";
-import { startSession } from "mongoose";
+import mongoose from "mongoose";
 
 
 const createAdmin = asyncHandler(async (req, res) => {
     const session = await mongoose.startSession();
     session.startTransaction();
 
+    //console.log(req.body);
     const {adminName, adminEmail, adminPassword} = req.body;
 
     if([adminName, adminEmail, adminPassword].some(field => field?.trim() == "")){
@@ -43,7 +44,7 @@ const createAdmin = asyncHandler(async (req, res) => {
     session.endSession();
 
     return res.status(201).json(
-        new ApiResponse(201, createAdmin, "New Admin created!")
+        new ApiResponse(201, createdAdmin, "New Admin created!")
     )
 })
 
