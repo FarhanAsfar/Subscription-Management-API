@@ -27,7 +27,7 @@ adminSchema.pre("save", async function(next){
         return next();
     }
 
-    this.adminPassword = bcryptjs.hash(this.adminPassword, 5);
+    this.adminPassword = await bcryptjs.hash(this.adminPassword, 5);
     next();
 })
 
