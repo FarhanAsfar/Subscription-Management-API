@@ -24,7 +24,7 @@ app.use(express.static("public"));
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/subscription", subscriptionRouter);
 app.use("/api/v1/user", userRouter);
-
+app.use("api/v1/admin", adminRouter);
 
 // Mount the Swagger UI
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(apiSpec));
