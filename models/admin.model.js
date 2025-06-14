@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import bcryptjs from "bcryptjs";
+
 
 const adminSchema = new mongoose.Schema({
     adminName: {
@@ -19,6 +21,15 @@ const adminSchema = new mongoose.Schema({
         required: [true, "Password is required"],
     }
 }, {timestamps: true})
+
+adminSchema.pre("save", async function(next){
+    if(!this.isModified(adminPassword)){
+        return next();
+    }
+
+    this.adminPassword = bcryptjs.hash(this.adminPassword, 5);
+    next();
+})
 
 
 const Admin = mongoose.model("Admin", adminSchema);
