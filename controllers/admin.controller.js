@@ -81,7 +81,7 @@ const loginAdmin = asyncHandler(async (req, res) => {
         throw new ApiError(404, "Admin not found");
     }
 
-    const isPasswordValid = await Admin.isPasswordValid(adminPassword);
+    const isPasswordValid = await admin.isPasswordValid(adminPassword);
 
     if(!isPasswordValid){
         throw new ApiError(401, "Password is not correct");
@@ -103,7 +103,7 @@ const loginAdmin = asyncHandler(async (req, res) => {
     return res.status(200)
     .cookie("accessToken", accessToken, options)
     .json(
-        new ApiResponse(200, {loggedInAdmin}, "Admin logged in successfully")
+        new ApiResponse(200, {Admin: loggedInAdmin, accessToken}, `${admin.adminName} logged in successfully`)
     );
 
 })

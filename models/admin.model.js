@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import bcryptjs from "bcryptjs";
-import { ApiError } from "../utils/ApiError";
+import { ApiError } from "../utils/ApiError.js";
 import jwt from "jsonwebtoken";
 
 const adminSchema = new mongoose.Schema({
@@ -33,7 +33,9 @@ adminSchema.pre("save", async function(next){
 })
 
 adminSchema.methods.isPasswordValid = async function(password) {
-    if(!password || this.adminPassword){
+    // console.log(password);
+    // console.log(this.adminPassword);
+    if(!password || !this.adminPassword){
         throw new ApiError(400, "Can not match password");
     }
 
