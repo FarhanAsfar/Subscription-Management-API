@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import bcryptjs from "bcryptjs";
-
+import { ApiError } from "../utils/ApiError";
+import jwt from "jsonwebtoken";
 
 const adminSchema = new mongoose.Schema({
     adminName: {
@@ -30,6 +31,25 @@ adminSchema.pre("save", async function(next){
     this.adminPassword = await bcryptjs.hash(this.adminPassword, 5);
     next();
 })
+
+adminSchema.methods.isPasswordValid = async function(password) {
+    if(!password || this.adminPassword){
+        throw new ApiError(400, "Can not match password");
+    }
+
+    return await bcryptjs.compare(password, this.adminPassword);
+}
+
+adminSchema.methods.generateAccessToken = async function(){
+    return jwt.sign(
+        {
+            _id: this._id,
+            role: "Admin",
+        },
+        process.env.ADMIN_ACCESS_TOKEN_SECRET,
+        {expiresIn: "2d"}
+    )
+}
 
 
 const Admin = mongoose.model("Admin", adminSchema);
