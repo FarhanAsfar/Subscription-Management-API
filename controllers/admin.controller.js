@@ -5,6 +5,21 @@ import { Admin } from "../models/admin.model.js";
 import mongoose from "mongoose";
 
 
+const generateAccessToken = async function(adminID){
+    try {
+        const admin = await Admin.findById(adminID);
+
+        const accessToken = admin.generateAccessToken();
+
+        await admin.save({validateBeforeSave: false})
+
+        return accessToken;
+    } catch (error) {
+        throw new ApiError(400, "Token generation failed");
+    }
+
+}
+
 const createAdmin = asyncHandler(async (req, res) => {
     const session = await mongoose.startSession();
     session.startTransaction();
@@ -48,6 +63,52 @@ const createAdmin = asyncHandler(async (req, res) => {
     )
 })
 
+const loginAdmin = asyncHandler(async (req, res) => {
+    const {adminName, adminPassword, adminEmail} = req.body;
+
+    if(!adminEmail || !adminPassword){
+        throw new ApiError(400, "Name, Email, and Password are required");
+    }
+    
+    const admin = await Admin.findOne({
+        $or: [
+            {adminName},
+            {adminEmail},
+        ]
+    })
+
+    if(!admin){
+        throw new ApiError(404, "Admin not found");
+    }
+
+    const isPasswordValid = await admin.isPasswordValid(adminPassword);
+
+    if(!isPasswordValid){
+        throw new ApiError(401, "Password is not correct");
+    }
+
+    const accessToken = await generateAccessToken(admin._id);
+
+    const loggedInAdmin = await Admin.findById(admin._id).select("-adminPassword");
+
+    if(!loggedInAdmin){
+        throw new ApiError(400, "Log in failed");
+    }
+
+    const options = {
+        httpOnly: true,
+        secure: true,
+    }
+
+    return res.status(200)
+    .cookie("accessToken", accessToken, options)
+    .json(
+        new ApiResponse(200, {Admin: loggedInAdmin, accessToken}, `${admin.adminName} logged in successfully`)
+    );
+
+})
+
 export {
     createAdmin,
+    loginAdmin,
 }
