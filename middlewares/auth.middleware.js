@@ -1,3 +1,4 @@
+import { Admin } from "../models/admin.model.js";
 import { User } from "../models/user.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
@@ -20,6 +21,28 @@ const verifyJWT = asyncHandler(async (req, res, next) => {
 
     req.user = user;
     next();
+});
+
+const isAdmin = asyncHandler(async (req, res, next) => {
+    const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer", "").trim();
+
+    if(!token){
+        throw new ApiError(401, "Unauthorized request/ Token expired");
+    }
+
+    const decodedToken = jwt.verify(token, process.env.ADMIN_ACCESS_TOKEN_SECRET);
+    
+    const admin = await Admin.findById(decodedToken?._id);
+
+    if(!admin || decodedToken.role != "Admin"){
+        throw new ApiError(403, "Access Denied! You are not an admin");
+    }
+
+    req.admin = admin;
+    next();
 })
 
-export {verifyJWT}
+export {
+    verifyJWT,
+    isAdmin,
+}
