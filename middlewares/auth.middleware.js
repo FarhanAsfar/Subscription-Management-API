@@ -38,7 +38,7 @@ const isAdmin = asyncHandler(async (req, res, next) => {
         throw new ApiError(403, "Access Denied! You are not an admin");
     }
 
-    req.admin = admin;
+    req.admin = admin; //admin can be accessed as: req.admin._id
     next();
 })
 
