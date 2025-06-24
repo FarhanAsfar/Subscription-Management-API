@@ -4,9 +4,11 @@ FROM node:20
 #working-directory
 WORKDIR /app
 
-COPY . .
+COPY package* .
 
 RUN npm install
+
+COPY . .
 
 EXPOSE 8000
 
