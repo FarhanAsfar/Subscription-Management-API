@@ -2,7 +2,7 @@ version: '3.8'
 services:
   mongodb:
     image: mongo
-    container_name: mognodb
+    container_name: mongodb
     ports:
       - 27017:27017
     volumes:
@@ -12,11 +12,11 @@ services:
     build: .
     container_name: subscription_backend
     depends_on:
-      - mognodb
+      - mongodb
     ports:
       - "3000:8000"
     environment:
-      - MONGO_URL: "mongodb://mongodb:27017/"
+      - MONGODB_URI= "mongodb://mongodb:27017/"
 
-  volumes:
-    mongodb_data: 
+volumes:
+  mongodb_data: 
