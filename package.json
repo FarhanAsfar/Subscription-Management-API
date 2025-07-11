@@ -12,7 +12,7 @@
     "setupFilesAfterEnv": [
       "./tests/setup.js"
     ],
-    "transform": { 
+    "transform": {
       "^.+\\.js$": "babel-jest"
     }
   },
