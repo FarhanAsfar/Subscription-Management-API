@@ -12,10 +12,7 @@ beforeAll(async () => {
     const mongoUri = mongo.getUri();
 
     // then, connect mongoose to the in-memory database
-    await mongoose.connect(mongoUri, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-    });
+    await mongoose.connect(mongoUri);
 
     // start express server in test mode
     // app.listen(0) makes it listen on a random available port, its better for avoiding port conflicts
