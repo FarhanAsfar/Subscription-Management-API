@@ -12,7 +12,7 @@
     "setupFilesAfterEnv": [
       "./tests/setup.js"
     ],
-    "transform": { 
+    "transform": {
       "^.+\\.js$": "babel-jest"
     }
   },
@@ -41,8 +41,8 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.27.1",
-    "@babel/preset-env": "^7.27.2",
+    "@babel/core": "^7.28.0",
+    "@babel/preset-env": "^7.28.0",
     "babel-jest": "^29.7.0",
     "jest": "^29.7.0",
     "mongodb-memory-server": "^10.1.4",
