@@ -31,5 +31,14 @@ describe('POST /api/v1/auth/signup', () => {
         expect(res.body.data.email).toBe(userData.email);
         expect(res.body.data.username).toBe(userData.username);
         expect(res.body.data).not.toHaveProperty('password'); // making sure that we are not getting password in the returned response.
+
+        // Verifying that user exists in database
+        const userInDb = await User.findOne({email: userData.email});
+
+        expect(userInDb).toBeDefined();
+        expect(userInDb.username).toBe(userData.username);
+        expect(userInDb.email).toBe(userData.email);
+        expect(userInDb.password).not.toBe(userData.password);
+
     })
 })
