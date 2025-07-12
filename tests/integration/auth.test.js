@@ -40,5 +40,23 @@ describe('POST /api/v1/auth/signup', () => {
         expect(userInDb.email).toBe(userData.email);
         expect(userInDb.password).not.toBe(userData.password);
 
+    });
+
+    // 2. Check if any required field is missing
+    it('should return 400 and an Error message if Email is missing', async() => {
+        const userData = {
+            username: 'username',
+            // email: missing,
+            password: 'password123',
+        }
+
+        const res = await request(appServer)
+        .post('/api/v1/auth/signup')
+        .send(userData)
+        .expect(400)
+
+        expect(res.body).toHaveProperty('message', 'All fields are required');
+        expect(res.body).toHaveProperty('success', false);
+        expect(res.body).toHaveProperty('statusCode', 400);
     })
 })
