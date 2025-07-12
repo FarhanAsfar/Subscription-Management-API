@@ -92,6 +92,7 @@ describe('POST /api/v1/auth/signup', () => {
         .expect(500)
 
         expect(res.body).toHaveProperty('message', 'User validation failed: password: Path `password` (`123`) is shorter than the minimum allowed length (4).');
+        //this message depends on how you are setting error message in the error middleware.
         expect(res.body).toHaveProperty('success', false);
     });
 
