@@ -93,5 +93,35 @@ describe('POST /api/v1/auth/signup', () => {
 
         expect(res.body).toHaveProperty('message', 'User validation failed: password: Path `password` (`123`) is shorter than the minimum allowed length (4).');
         expect(res.body).toHaveProperty('success', false);
+    });
+
+    // 5. Check if email already exists
+    it('should return 409 if Email already exists', async() => {
+        const userData = {
+            username: 'username1',
+            email: 'existingEmail@gmail.com',
+            password: 'password123',
+        }
+
+        // First create the user data successfully
+        await request(appServer)
+        .post('/api/v1/auth/signup')
+        .send(userData)
+        .expect(201)
+
+        // Then try to register with the same Email again
+        const newUser = {
+            username: 'newUser',
+            email: 'existingEmail@gmail.com', // same email
+            password: 'password123',
+        }
+
+        const res = await request(appServer)
+        .post('/api/v1/auth/signup')
+        .send(newUser)
+        .expect(409)
+
+        expect(res.body).toHaveProperty('message', 'Username or Email already exists');
+        expect(res.body).toHaveProperty('success', false);
     })
 })
