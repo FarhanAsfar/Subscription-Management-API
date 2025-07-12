@@ -60,5 +60,22 @@ describe('POST /api/v1/auth/signup', () => {
         expect(res.body).toHaveProperty('statusCode', 400);
     });
 
-   
+    // 3. Invalid data fromat
+    it('should return 500 if invalid Email is given', async() => { 
+        const userData = {
+            username: 'username',
+            email: 'invalid-email',
+            password: 'password123',
+        }       
+
+        const res = await request(appServer)
+        .post('/api/v1/auth/signup')
+        .send(userData)
+        .expect(500)
+
+        expect(res.body).toHaveProperty('message', 'User validation failed: email: Please enter a valid email address');
+    });
+
+
+    // 4. 
 })
