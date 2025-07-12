@@ -74,8 +74,24 @@ describe('POST /api/v1/auth/signup', () => {
         .expect(500)
 
         expect(res.body).toHaveProperty('message', 'User validation failed: email: Please enter a valid email address');
+        expect(res.body).toHaveProperty('success', false);
     });
 
 
-    // 4. 
+    // 4. Check if password is too short
+    it('should return 500 if password is too short', async () => {
+        const userData = {
+            username: 'username',
+            email: 'user@gmail.com',
+            password: '123', //minimum password length should be 4
+        }
+
+        const res = await request(appServer)
+        .post('/api/v1/auth/signup')
+        .send(userData)
+        .expect(500)
+
+        expect(res.body).toHaveProperty('message', 'User validation failed: password: Path `password` (`123`) is shorter than the minimum allowed length (4).');
+        expect(res.body).toHaveProperty('success', false);
+    })
 })
