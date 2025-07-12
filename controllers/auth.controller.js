@@ -25,7 +25,9 @@ const signUP = asyncHandler(async (req, res) => {
 
     const {username, email, password} = req.body;    
 
-    if([username, email, password].some((field) => field?.trim() === "")){
+    if(!username || !email || !password || [username, email, password].some((field) => field?.trim() === "")){
+        await session.abortTransaction();
+        session.endSession();
         throw new ApiError(400, "All fields are required");
     }
 
