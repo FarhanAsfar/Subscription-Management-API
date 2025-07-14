@@ -4,6 +4,7 @@ import {app} from "../app.js";
 
 let mongo;
 let server;
+jest.setTimeout(20000);
 
 // This will run once before running all test suites
 beforeAll(async () => {

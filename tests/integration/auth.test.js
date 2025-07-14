@@ -126,3 +126,84 @@ describe('POST /api/v1/auth/signup', () => {
         expect(res.body).toHaveProperty('success', false);
     })
 })
+
+describe ('POST /api/v1/auth/signin', () => {
+    // 6. Check if singin is successful 
+    it('should return 200 if user signs in succesfully', async()  => {
+        const signupUser = {
+            username: 'signupuser',
+            email: 'signupUser@gmail.com',
+            password: 'user123',
+        }
+        // First create the user before signing in
+        const signupRes = await request(appServer)
+        .post('/api/v1/auth/signup')
+        .send(signupUser)
+        .expect(201)
+
+        const userInDb = await User.findOne({email:signupUser.email});
+        console.log(userInDb);
+        
+        // Then try to singin with the created user
+        const signinUser = {
+            email: signupUser.email,
+            password: signupUser.password,
+        }
+        console.log("sign in attempt..")
+        const res = await request(appServer)
+        .post('/api/v1/auth/signin')
+        .send(signinUser)
+        .expect(200)
+        
+        console.log("signin status: ", res.status);
+        console.log("signin body: ", res.body);
+
+        expect(res.body).toHaveProperty('message', 'user logged in successfully');
+        expect(res.body).toHaveProperty('success', true);
+    });
+
+    // 7. Check if Email or Password is missing
+    it('should return 400 if Email or Password is missing', async() => {
+        const userData = {
+            // email: 'missing',
+            password: 'user123',
+        }
+
+        const res = await request(appServer)
+        .post('/api/v1/auth/signin')
+        .send(userData)
+        .expect(400)
+
+        expect(res.body).toHaveProperty('statusCode', 400);
+        expect(res.body).toHaveProperty('success', false);
+        expect(res.body).toHaveProperty('message', 'Email and Password are required');
+
+    });
+
+    // 8. Check if password does not match
+    it('should return 401 if the password is Invalid', async() => {
+        const signupUser = {
+            username: 'newuser',
+            email: 'user@gmail.com',
+            password: 'user123',
+        }
+        await request(appServer)
+        .post('/api/v1/auth/signup')
+        .send(signupUser)
+        .expect(201)
+
+        const createdUser = {
+            email: signupUser.email,
+            password: 'invalid-password',
+        }
+
+        const res = await request(appServer)
+        .post('/api/v1/auth/signin')
+        .send(createdUser)
+        .expect(401)
+
+        expect(res.body).toHaveProperty('message', "Invalid Password");
+        expect(res.body).toHaveProperty('success', false);
+
+    })
+})
