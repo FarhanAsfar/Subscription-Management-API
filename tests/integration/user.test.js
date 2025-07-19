@@ -28,3 +28,29 @@ describe('GET /api/v1/user/profile', () => {
         expect(createdUser.body).toHaveProperty('statusCode', 200);
     })
 })
+
+describe('PUT /api/v1/user/update-account', () => {
+    it('should return 200 after updating user account', async() => {
+        const createUser = {
+            username: 'username',
+            email: 'user@gmail.com',
+            password: 'password123',
+        }
+
+        await request(appServer)
+        .post('/api/v1/auth/signup')
+        .send(createUser)
+        .expect(201)
+
+        const updateUser = {
+            username: 'newUsername',
+            email: 'newUser@gmail.com',
+        }
+
+        const res = await request(appServer)
+        .put('/api/v1/user/update-account')
+        .send(updateUser)
+        .expect(200)
+
+    })
+})
