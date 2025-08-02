@@ -64,7 +64,7 @@ describe('POST /api/v1/auth/signup', () => {
     it('should return 500 if invalid Email is given', async() => { 
         const userData = {
             username: 'username',
-            email: 'invalid-email',
+            email: 'invalid-email', // intentional invalid email
             password: 'password123',
         }       
 
