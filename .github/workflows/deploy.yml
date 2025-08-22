@@ -22,7 +22,7 @@ jobs:
               uses: docker/build-push-action@v2
               with:
                 context: .
-                file: ./
+                file: ./Dockerfile
                 push: true
                 tags: arnob21/ci-cd:latest
             
