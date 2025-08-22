@@ -1,0 +1,30 @@
+name: Build and Deploy to Docker Hub
+
+on:
+    push:
+        branches: 
+            - main
+
+jobs:
+    build-and-push:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Check Out Repo
+              uses: actions/checkout@v2
+
+            - name: Log in to Docker Hub
+              uses: docker/login-action@v1
+              with:
+                username: ${{secrets.Docker}}
+                password: ${{secrets.Docker_Password}}
+                
+            - name: Build and Push Docker image
+              uses: docker/build-push-action@v2
+              with:
+                context: .
+                file: ./
+                push: true
+                tags: arnob21/ci-cd:latest
+            
+            - name: Verify Pushed image
+              run: docker pull arnob21/ci-cd:latest 
