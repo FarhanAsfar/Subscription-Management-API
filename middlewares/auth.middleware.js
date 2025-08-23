@@ -35,7 +35,7 @@ const isAdmin = asyncHandler(async (req, res, next) => {
     const admin = await Admin.findById(decodedToken?._id);
 
     if(!admin || decodedToken.role != "Admin"){
-        throw new ApiError(403, "Access Denied! You are not an admin");
+        throw new ApiError(403, "Access Denied! You are not an Admin");
     }
 
     req.admin = admin; //admin can be accessed as: req.admin._id

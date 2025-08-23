@@ -3,6 +3,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { Admin } from "../models/admin.model.js";
 import mongoose from "mongoose";
+import { User } from "../models/user.model.js";
 
 
 const generateAccessToken = async function(adminID){
@@ -105,10 +106,18 @@ const loginAdmin = asyncHandler(async (req, res) => {
     .json(
         new ApiResponse(200, {Admin: loggedInAdmin, accessToken}, `${admin.adminName} logged in successfully`)
     );
+})
 
+const usersInfo = asyncHandler(async (req, res) => {
+    const users = await User.find().select("-password");
+
+    return res.status(200).json(
+        new ApiResponse(200, users, "Fetched all users")
+    )
 })
 
 export {
     createAdmin,
     loginAdmin,
+    usersInfo,
 }
