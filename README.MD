@@ -2,14 +2,13 @@
 
 [![Build Status](https://github.com/FarhanAsfar/subscription-Management-API/actions/workflows/build.yml/badge.svg)](https://github.com/FarhanAsfar/subscription-Management-API/actions)
 
-A production-ready REST API built with Node.js, Express, and MongoDB. Features secure authentication (JWT, bcrypt), role-based access control (RBAC), Dockerized deployment, Swagger/OpenAPI documentation, and CI/CD via GitHub Actions.
+A REST API built with Node.js, Express, and MongoDB. Features secure authentication (JWT, bcrypt), role-based access control (RBAC), Dockerized deployment, Swagger/OpenAPI documentation, and CI/CD via GitHub Actions.
 
 ## Features
 
 - RESTful endpoints for user accounts and subscriptions
 - JWT-based authentication and bcrypt password hashing
 - Role-based access control (admin routes)
-- Comprehensive tests with Jest and Supertest (10+ tests, ~95% coverage)
 - Swagger/OpenAPI documentation
 - Dockerized for easy deployment; deployed on Render
 - CI/CD with GitHub Actions
@@ -57,7 +56,6 @@ Run locally:
 ```bash
 npm start
 # API: http://localhost:3000
-# Swagger docs: http://localhost:3000/api-docs
 ```
 
 Run tests:
@@ -75,7 +73,7 @@ docker run -p 3000:3000 --env-file .env arnob21/subscription-api
 
 ## API Endpoints
 
-Explore interactive docs via Swagger: https://subscription-management-api-8olf.onrender.com/api-docs
+Swagger UI Link: https://subscription-management-api-8olf.onrender.com/api-docs
 
 | Method | Endpoint                                      | Description                 | Auth Required |
 |--------|-----------------------------------------------|-----------------------------|---------------|
@@ -101,15 +99,4 @@ Explore interactive docs via Swagger: https://subscription-management-api-8olf.o
 
 - Unit tests: validate helpers (e.g., JWT generation, bcrypt hashing)
 - Integration tests: test endpoints using Supertest
-- Run: `npm test` (10+ tests, ~95% coverage)
-
-## Notes
-
-- Ensure sensible JWT_SECRET and secure database credentials in production.
-- Add indexing in MongoDB for scalability and performance.
-- See .github/workflows for CI/CD details and Dockerfile for container configuration.
-
-Links:
-- Repository: https://github.com/FarhanAsfar/subscription-Management-API
-- Swagger: https://subscription-management-api-8olf.onrender.com/api-docs
-
+- Run: `npm test` 
