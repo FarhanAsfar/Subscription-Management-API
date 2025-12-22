@@ -52,5 +52,6 @@ describe('PUT /api/v1/user/update-account', () => {
         .send(updateUser)
         .expect(200)
 
+        console.log(res);
     })
 })
